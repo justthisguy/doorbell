@@ -1,4 +1,8 @@
 Doorbell::Application.routes.draw do
+  resources :doormen
+
+  match "sms" => "doormen#sms", :via => :post
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
