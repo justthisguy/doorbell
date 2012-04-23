@@ -2,9 +2,8 @@ class Event < ActiveRecord::Base
   attr_accessible :duration, :frequency, :name, :reserves, :start
   serialize :reserves, Array
   
-  
-  
-  def self.sms (params, rest)    
+
+  def self.sms    
     
     Rails.logger.debug('************************** event SMS ' + rest.to_s)
     
@@ -38,5 +37,5 @@ class Event < ActiveRecord::Base
     end
     
   end
-  
+
 end

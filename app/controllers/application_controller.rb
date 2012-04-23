@@ -54,7 +54,15 @@ class ApplicationController < ActionController::Base
           Rails.logger.debug('************************** calling event SMS ' + body.to_s)
           
           Event.sms(params, body)
-        
+          account_sid = 'ACbbefae45e9c349aa931498bd315c85e1'
+          auth_token = '748a6fa66c8d70882fdbb9424b5c0944'
+          @client = Twilio::REST::Client.new account_sid, auth_token
+
+          @client.account.sms.messages.create(
+            :from => '(415) 599-2671',
+            :to => phone,
+            :body => phone + ' is at the door'
+            )
 
         else
           render :text => "<Response><Sms>SAY WHAT?  Send 'door' to get in/Sms></Response>", :content_type => 'text/xml'
