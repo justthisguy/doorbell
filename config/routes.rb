@@ -2,7 +2,8 @@ Doorbell::Application.routes.draw do
   resources :events
 
   resources :doormen
-  
+  match "events/:event_name/start" => "events#start", :as => "start_event"
+
   # root :to => 'doormen'
 
   match "sms" => "application#sms", :via => :post

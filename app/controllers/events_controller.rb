@@ -80,4 +80,25 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  
+  def start
+    Rails.logger.debug("\n\n\r************************** event controller params: #{params.inspect} \n\n\r")
+    
+    event = Event.find_by_name(params[:event_name])
+    Rails.logger.debug("\n\n\r************************** event start event: #{event.inspect} \n\n\r")
+    
+    
+    event.reserves.each do |r|
+      
+    
+    
+    render :text => "event #{params[:event_name]} started"#, :content_type => "text/xml"
+    
+  end
+  
+  
+  
+  
 end
