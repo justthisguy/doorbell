@@ -82,23 +82,26 @@ class EventsController < ApplicationController
   end
   
   
-  
+  ## Scheduled events
+  ## 
   def start
-    Rails.logger.debug("\n\n\r************************** event controller params: #{params.inspect} \n\n\r")
-    
     event = Event.find_by_name(params[:event_name])
-    Rails.logger.debug("\n\n\r************************** event start event: #{event.inspect} \n\n\r")
-    
     
     event.reserves.each do |r|
-      
+      message = Doorman.add(r)
+    end
     
-    
-    render :text => "event #{params[:event_name]} started"#, :content_type => "text/xml"
-    
+    render :text => "event #{params[:event_name]} started"
   end
   
-  
-  
+  def end
+    event = Event.find_by_name(params[:event_name])
+    
+    event.reserves.each do |r|
+      Doorman.remove(r)
+    end
+    
+    render :text => "event #{params[:event_name]} started"
+  end
   
 end

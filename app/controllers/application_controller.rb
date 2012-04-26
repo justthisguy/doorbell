@@ -1,65 +1,59 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :twilio_init
+
   
+  ## TODO: Move this to a helper place
+  ##
+  def respond (message)
+    render :text => "<Response><Sms>#{message}</Sms></Response>", :content_type => "text/xml"
+  end
   
-    def sms
+  def sms
+    body = params[:Body].split
+    phone = params[:From]
+  
+    case body[0]
+    
+      # Rails.logger.debug('************************** calling event SMS ' + body.to_s)
+    
+      ##
+      ## Door section
+      ##
+      when "add"
+        message = Doorman.add(phone) 
+        respond(message)
 
-      Rails.logger.debug("******************** these be the params #{params} ")
+      when "remove" 
+        message = Doorman.remove(phone)
+        respond(message)
 
-      body = params[:Body].split
-      phone = params[:From]
-      
-      Rails.logger.debug("******************** these is the body #{body} ")
-      
-      
-
-      case body[0]
-        when "add"
-          doorman = Doorman.new
-          doorman.phone = phone
-          doorman.save
-
-          Rails.logger.debug('new doorman ' + doorman.to_s)
-          render :text => '<Response><Sms>add</Sms></Response>', :content_type => "text/xml"
-
-        when "remove" 
-          doorman = Doorman.find_by_phone(phone)
-
-          if doorman.destroy 
-            render :text => '<Response><Sms>You have been removed. SURF thanks you for your help.</Sms></Response>', :content_type => "text/xml"
-          end
-
-        when "door"
-          account_sid = 'ACbbefae45e9c349aa931498bd315c85e1'
-          auth_token = '748a6fa66c8d70882fdbb9424b5c0944'
-          @client = Twilio::REST::Client.new account_sid, auth_token
-
-          Doorman.all.each do |d|
-
-            Rails.logger.debug("doorman message to #{d.phone} from #{phone}")
-
-            @client.account.sms.messages.create(
-              :from => '4155992671',
-              :to => d.phone,
-              :body => phone + ' is at the door'
-              )
-          end
-
-          render :text => '<Response><Sms>Give us a minute please. Help is on the way.</Sms></Response>', :content_type => "text/xml"
- 
- 
-        when "event" 
-          
-          Rails.logger.debug('************************** calling event SMS ' + body.to_s)
-          
-          message = Event.sms(params, body)
-          return render :text => "<Response><Sms>#{message}</Sms></Response>", :content_type => "text/xml"
+      when "door"
+        message = Doorman.door(phone, @client)
+        respond(message)
 
 
-        else
-          render :text => "<Response><Sms>SAY WHAT?  Send 'door' to get in/Sms></Response>", :content_type => 'text/xml'
-      end
+      ##
+      ## Events
+      ##
+      when "event"         
+        message = Event.sms(params, body)
+        respond(message)
+
+
+      else
+        respond("SAY WHAT?  Send 'door' to get in")
     end
+  end
+  
+  
+  private
+
+  def twilio_init
+   private_config = YAML.load_file('config/private_config.yml')
+   @client = Twilio::REST::Client.new private_config['twilio']['account_sid'], private_config['twilio']['auth_token']
+  end
+  
   
 end
