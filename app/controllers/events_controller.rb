@@ -91,7 +91,7 @@ class EventsController < ApplicationController
       message = Doorman.add(r)
     end
     
-    render :text => "event #{params[:event_name]} started"
+    render text: "event #{params[:event_name]} started"
   end
   
   def end
@@ -101,7 +101,7 @@ class EventsController < ApplicationController
       Doorman.remove(r)
     end
     
-    render :text => "event #{params[:event_name]} started"
+    render text: "event #{params[:event_name]} started"
   end
   
 end

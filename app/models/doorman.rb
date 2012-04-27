@@ -27,9 +27,9 @@ class Doorman < ActiveRecord::Base
 
     self.all.each do |d|
       client.account.sms.messages.create(
-        :from => '4155992671',
-        :to => d.phone,
-        :body => phone + ' is at the door'
+        from: '4155992671',
+        to: d.phone,
+        body: phone + ' is at the door'
         )
     end
 

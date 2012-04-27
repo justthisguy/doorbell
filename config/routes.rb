@@ -2,12 +2,12 @@ Doorbell::Application.routes.draw do
   resources :events
 
   resources :doormen
-  match "events/:event_name/start" => "events#start", :as => "start_event"
-  match "events/:event_name/end" => "events#end", :as => "end_event"
+  match "events/:event_name/start" => "events#start", as: "start_event"
+  match "events/:event_name/end" => "events#end", as: "end_event"
 
   # root :to => 'doormen'
 
-  match "sms" => "application#sms", :via => :post
+  match "sms" => "application#sms", via: :post
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
