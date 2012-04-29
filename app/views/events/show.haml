@@ -1,0 +1,26 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @event.name
+
+%p 
+  %b Start:
+  = @event.start
+
+%p 
+  %b Duration:
+  = @event.duration 
+
+%p 
+  %b Frequency:
+  = @event.frequency
+
+%p 
+  %b Reserves:
+  = @event.reserves 
+
+
+= link_to 'Edit', edit_event_path(@event)
+|
+= link_to 'Back', events_path

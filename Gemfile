@@ -14,6 +14,7 @@ end
 
 
 gem 'twilio-ruby', '3.5.1'
+gem 'haml-rails'
 
 
 

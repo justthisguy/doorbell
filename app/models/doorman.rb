@@ -21,9 +21,8 @@ class Doorman < ActiveRecord::Base
   end
   
   def self.door (phone, client)
-    #
-    #  TODO: Send diferent message if NO doormen
-    #
+
+    return 'Sorry, there no doormen at the moment.' if self.all.empty?
 
     self.all.each do |d|
       client.account.sms.messages.create(

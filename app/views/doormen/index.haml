@@ -1,0 +1,20 @@
+%h1 Listing doormen
+
+%table 
+  %tr 
+    %th Phone
+    %th 
+    %th  
+    %th  
+
+- @doormen.each do |doorman|
+  %tr 
+    %td= doorman.phone
+    %td= link_to 'Show', doorman
+    %td= link_to 'Edit', edit_doorman_path(doorman) 
+    %td= link_to 'Destroy', doorman, confirm: 'Are you sure?', method: :delete
+
+    %br/
+    %br/
+
+= link_to 'New Doorman', new_doorman_path
