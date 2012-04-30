@@ -7,5 +7,26 @@
     = csrf_meta_tags
 
   %body
-
-  = yield
+    .navbar.navbar-fixed
+      .navbar-inner
+        .container
+          %a.btn.btn-navbar{ "data-toggle" => "collapse", "data-target" => ".nav-collapse" }
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{href: "#"}Some Text
+          .nav-collapse
+            %ul.nav
+              %li=link_to "Doormen", doormen_path
+              %li=link_to "Events", events_path
+    .container
+      -flash.each do |name, msg|
+        .alert{class: "alert-#{name == :notice ? 'success' : 'error'}"}
+          %a.close{"data-dismiss" => "alert"}x
+          =msg
+      .row
+        .span9
+          = yield
+        .span3
+          %h2 About Us
+          %p lkjhsdf lkajshdf lkjashdflkjashdflkjads flkjas dlkfjh alskdjfhlaksjdf lkasjdhf lkjashdf lkjhas dlkfjhas dlkfjh aslkdjfh laksdjhf lkasjdhf lkajshdf lkjahsdf lkjhasd lfkjhasdl kfjh asldkfjh alskdjfhalksdjf laksjdhf lkajsdf lkjads lfkjhasldkfjh asd

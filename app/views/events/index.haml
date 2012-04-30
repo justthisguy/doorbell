@@ -1,26 +1,29 @@
 %h1 Listing events
 
-%table 
-  %tr 
-    %th Name
-    %th Start 
-    %th Duration 
-    %th Frequency 
-    %th Reserves 
-    %th  
-    %th  
-    %th  
+.row
+  .span6
+    %table.table 
+      %thead
+        %tr 
+          %th Name
+          %th Start 
+          %th Duration 
+          %th Frequency 
+          %th Reserves 
+          %th  
+          %th  
+          %th  
 
-- @events.each do |event|
-  %tr 
-    %td= event.name
-    %td= event.start
-    %td= event.duration
-    %td= event.frequency
-    %td= event.reserves
-    %td= link_to 'Show', event
-    %td= link_to 'Edit', edit_event_path(event)
-    %td= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete
+        - @events.each do |event|
+          %tr 
+            %td= event.name
+            %td= event.start
+            %td= event.duration
+            %td= event.frequency
+            %td= event.reserves
+            %td= link_to 'Show', event
+            %td= link_to 'Edit', edit_event_path(event)
+            %td= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete
 
 %br/
 

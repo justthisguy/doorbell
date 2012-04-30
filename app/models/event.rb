@@ -1,6 +1,10 @@
 class Event < ActiveRecord::Base
   attr_accessible :duration, :frequency, :name, :reserves, :start
   serialize :reserves, Array
+
+  #
+  # TODO: get serialize :reserves working.
+  #
   
   # def initialize (new_name)
   #   name = new_name

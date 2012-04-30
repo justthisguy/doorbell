@@ -1,0 +1,12 @@
+- model_class = @doorman.class
+%h1=t '.title', :default => model_class.model_name.human
+
+%p
+  %strong= model_class.human_attribute_name(:phone) + ':'
+  %br
+  = @doorman.phone
+
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), doormen_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_doorman_path(@doorman), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), doorman_path(@doorman), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger'
