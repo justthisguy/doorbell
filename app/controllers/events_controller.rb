@@ -80,28 +80,28 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  
+
+
   ## Scheduled events
   ## 
   def start
     event = Event.find_by_name(params[:event_name])
-    
+
     event.reserves.each do |r|
       message = Doorman.add(r)
     end
-    
+
     render text: "event #{params[:event_name]} started"
   end
-  
+
   def end
     event = Event.find_by_name(params[:event_name])
-    
+
     event.reserves.each do |r|
       Doorman.remove(r)
     end
-    
+
     render text: "event #{params[:event_name]} started"
   end
-  
+
 end
