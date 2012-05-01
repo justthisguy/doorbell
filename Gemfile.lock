@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     annotate (2.4.0)
     arel (3.0.2)
+    bootstrap-sass (2.0.2)
     builder (3.0.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -38,7 +39,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.1)
-    commonjs (0.2.6)
     erubis (2.7.0)
     execjs (1.3.1)
       multi_json (~> 1.0)
@@ -57,11 +57,6 @@ GEM
     json (1.7.0)
     jwt (0.1.4)
       json (>= 1.2.4)
-    less (2.2.1)
-      commonjs (~> 0.2.6)
-    less-rails (2.2.2)
-      actionpack (>= 3.1)
-      less (~> 2.2.0)
     libv8 (3.3.10.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -117,10 +112,6 @@ GEM
       builder (>= 2.1.2)
       jwt (>= 0.1.2)
       multi_json (>= 1.0.3)
-    twitter-bootstrap-rails (2.0.6)
-      actionpack (>= 3.1)
-      less-rails (~> 2.2.0)
-      railties (>= 3.1)
     tzinfo (0.3.33)
     uglifier (1.2.4)
       execjs (>= 0.3.0)
@@ -131,6 +122,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bootstrap-sass
   coffee-rails (~> 3.2.1)
   haml-rails
   jquery-rails
@@ -140,5 +132,4 @@ DEPENDENCIES
   sqlite3
   therubyracer
   twilio-ruby (= 3.5.1)
-  twitter-bootstrap-rails
   uglifier (>= 1.0.3)

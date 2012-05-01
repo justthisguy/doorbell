@@ -51,8 +51,8 @@ class ApplicationController < ActionController::Base
   private
 
   def twilio_init
-   private_config = YAML.load_file('config/private_config.yml')
-   @client = Twilio::REST::Client.new private_config['twilio']['account_sid'], private_config['twilio']['auth_token']
+#   private_config = YAML.load_file('config/private_config.yml')
+   @client = Twilio::REST::Client.new ENV['twilio_account_sid'], ENV['twilio_auth_token']
   end
   
   

@@ -2,9 +2,9 @@
 %html
   %head
     %title Doorbell
-    = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
-    = csrf_meta_tags
+    =stylesheet_link_tag "application", :media => "all"
+    =javascript_include_tag "application"
+    =csrf_meta_tags
 
   %body
     .navbar.navbar-fixed
@@ -14,7 +14,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{href: "#"}Some Text
+          %a.brand{href: "#"}Doorbell
           .nav-collapse
             %ul.nav
               %li=link_to "Doormen", doormen_path
