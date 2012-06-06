@@ -19,10 +19,6 @@ Appropriate feedback should be send in reply to above messages.
 
 
 
-### TO DO 
-More robust door Door DOOR
-add & remove safely
-
 
 Additions:
 
@@ -34,7 +30,7 @@ add an email component.
  
 # * User
 # Create a user
-# txt creating of o user
+# txt creating of user
 
 
 
@@ -52,9 +48,20 @@ events/'event[name]'/end
 
 
 * Admin pages
+* make it attractive
 
 
-make it attractive
+
+### PERHAPS 
+# More robust door Door DOOR
+# add & remove safely
+
+allow 'door seattleonrails'
+
+Add 'Ping' => 'ping is anyone there yet?' -- allows for anonymous reply
+Add 'Register' => 'register shopobot' -- becomes an adverb for ping
+Add 'add to' and 'remove from'
+
 
 
 
@@ -63,6 +70,10 @@ make it attractive
 
 rails generate scaffold Doorman phone:string
 rails generate scaffold Event name:string start:datetime duration:int frequency:string reserves:array
+heroku config:add twilio_account_sid='your account sid' twilio_auth_token='your auth token'
+rails g bootstrap:themed doormen  -f
+rails g bootstrap:themed events  -f
+
 
 
 bundle exec rake db:migrate
