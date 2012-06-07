@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   ## TODO: Move this to a helper place
   ##
   def respond (message)
-    render text: "<Response><Sms>#{message} \r\n* built by 41monkeys  \r\n* built on and supported by Twilio</Sms></Response>", content_type: "text/xml"
+    render text: "<Response><Sms>#{message}    *** built by 41monkeys  **** built on and supported by Twilio</Sms></Response>", content_type: "text/xml"
   end
 
   def sms

@@ -28,7 +28,7 @@ class Doorman < ActiveRecord::Base
       client.account.sms.messages.create(
         from: '2065351536',
         to: d.phone,
-        body: phone + ' is at the door.   \r\n* built by 41monkeys  \r\n* built on and supported by Twilio'
+        body: phone + ' is at the door.   *** built by 41monkeys  **** built on and supported by Twilio'
         )
     end
 
