@@ -23,12 +23,13 @@ class ApplicationController < ActionController::Base
   ## TODO: Move this to a helper place
   ##
   def respond (message)
-    render text: "<Response><Sms>#{message} =>build by 41monkeys =>build on and supported by Twilio</Sms></Response>", content_type: "text/xml"
+    render text: "<Response><Sms>#{message} /r=> built by 41monkeys /r=> built on and supported by Twilio</Sms></Response>", content_type: "text/xml"
   end
 
   def sms
     body      = params[:Body].split
     phone     = params[:From]
+    to        = params[:To]
 
     #
     # SEE BELOW FOR A FULL PARAMS SET
