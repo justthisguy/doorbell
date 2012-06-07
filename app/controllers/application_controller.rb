@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   ## TODO: Move this to a helper place
   ##
   def respond (message)
-    render text: "<Response><Sms>#{message}</Sms></Response>", content_type: "text/xml"
+    render text: "<Response><Sms>#{message} =>build by 41monkeys =>build on and supported by Twilio</Sms></Response>", content_type: "text/xml"
   end
 
   def sms
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
 
 
     when "add"
-      Rails.logger.debug('************************** calling event add ' + body.to_s)
+      # Rails.logger.debug('************************** calling event add ' + body.to_s)
       message = Doorman.add(phone) 
       respond(message)
 
