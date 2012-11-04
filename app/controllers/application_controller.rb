@@ -67,10 +67,12 @@ class ApplicationController < ActionController::Base
   def call
     logger.debug('~~~~~~~~~ calling event call ' + params.to_yaml)
     # logger.debug('~~~~~~~~~ calling event call ' + params[:From])
-
-    # if params[:From] == '+14155154361'
-    #   respond("<Say>Hello Ken. Pick a number. Any number</Say>")
-
+    
+    
+    params[:From] == '+14155154361' ? say = "<Say>Hello Ken. Thank you for calling</Say>" : say = ""
+    params[:From] == '+12063038222' ? say = "<Say>Hello Skander. Thank you for calling</Say>" : say = ""
+    params[:From] == '+12148685961' ? say = "<Say>Hello Parental Unit. Thank you for calling</Say>" : say = ""
+    params[:From] == '+18163650563' ? say = "<Say>Hello Kris. Thank you for calling</Say>" : say = ""
 
     now = DateTime.now
     mdays = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth', 'twenty-first', 'twenty-second', 'twenty-third', 'twenty-fourth', 'twenty-fifth', 'twenty-sixth', 'twenty-seventh', 'twenty-eighth', 'twenty-ninth', 'thirtieth', 'thirty-first']
