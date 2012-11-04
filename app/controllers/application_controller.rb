@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
 
   before_filter :twilio_init
 
+  ###
+  # SEE BELOW FOR A FULL PARAMS SET
+  ###
+
+
   ## TODO: decide on data model
   ##
   ## TODO: move processing to controllers
@@ -11,19 +16,19 @@ class ApplicationController < ActionController::Base
   ##
   ## TODO: add authentication and authorization
   ##
-  ## TODO: Perhaps move to MongoDB
-  ##
   ## TODO: Full set of tests
-  ##
-  ## TODO: better design elements
-  ##
 
-
-
-  ## TODO: Move this to a helper place
-  ##
   def respond (message)
-    render text: "<Response><Sms>#{message}    *** built by 41monkeys  **** built on and supported by Twilio</Sms></Response>", content_type: "text/xml"
+    ## TODO: Move this to a helper place
+    render text: "<Response>#{message}</Response>", content_type: "text/xml"
+  end
+  
+  def respond_to_sms(message)
+    respond("<sms>#{message}    *** built by 41monkeys  **** built on and supported by Twilio</sms>")
+  end
+
+  def respond_to_call(message)
+    respond(:call, message)
   end
 
   def sms
@@ -31,11 +36,7 @@ class ApplicationController < ActionController::Base
     phone     = params[:From]
     to        = params[:To]
 
-    #
-    # SEE BELOW FOR A FULL PARAMS SET
-    #
-    # Rails.logger.debug('************************** calling event SMS ' + params.to_s)
-
+    # logger.debug('~~~~~~~~~ calling event SMS ' + params.to_yaml)
     case body[0].downcase
 
     ##
@@ -43,40 +44,56 @@ class ApplicationController < ActionController::Base
     ##
     when "event"         
       message = Event.sms(params, body)
-      respond(message)
-
+      respond_to_sms(message)
 
     when "add"
-      # Rails.logger.debug('************************** calling event add ' + body.to_s)
       message = Doorman.add(phone) 
-      respond(message)
+      respond_to_sms(message)
 
     when "remove" 
       message = Doorman.remove(phone)
-      respond(message)
+      respond_to_sms(message)
 
     when "door"
       message = Doorman.door(phone, @client)
-      respond(message)
+      respond_to_sms(message)
 
-
-
-
-      ##
-      ## Door section -- Everything else gets passed to Door
-      ##
     else
-      respond("SAY WHAT?  Send 'door' to get in")
+      respond_to_sms("SAY WHAT?  Send 'door' to get in")
     end
   end
 
 
+  def call
+    logger.debug('~~~~~~~~~ calling event call ' + params.to_yaml)
+    # logger.debug('~~~~~~~~~ calling event call ' + params[:From])
+
+    # if params[:From] == '+14155154361'
+    #   respond("<Say>Hello Ken. Pick a number. Any number</Say>")
+
+
+    now = DateTime.now
+    mdays = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth', 'twenty-first', 'twenty-second', 'twenty-third', 'twenty-fourth', 'twenty-fifth', 'twenty-sixth', 'twenty-seventh', 'twenty-eighth', 'twenty-ninth', 'thirtieth', 'thirty-first']
+    say = now.strftime('it is now ') + now.strftime('%M').to_i.to_s + now.strftime(' minutes after %l %p on %A, the ' ) + mdays[now.strftime('%e').to_i] + now.strftime(' day of %B in the year %Y' )
+    respond("<Say>#{say}. Please call again.</Say>")
+    
+    
+    
+    # respond("<Say voice='woman'  language='fr'>Bonjour Skander.  Tu fais chier! au revoir.</Say><Status>completed</Status>")
+    # if params[:From] == '+12063038222'
+    #   if params[:Digits]
+    #     respond("<Say voice='woman' language='fr'>Thank you but You STILL suck. Good bye.</Say>")
+    #   else
+    #     respond("<Gather finishOnKey='any digit'><Say voice='woman'>Hi there Skander.  You suck. Please press 1.</Say></Gather>")
+    #   end
+    # end    
+  end
+  
   private
 
   def twilio_init
     @client   = Twilio::REST::Client.new ENV['twilio_account_sid'], ENV['twilio_auth_token']
   end
-
 
 end
 
@@ -99,3 +116,33 @@ end
 #  "FromZip"=>"98109" 
 #  "action"=>"sms" 
 #  "controller"=>"application"}
+
+
+
+
+# {"AccountSid"=>"ACbbefae45e9c349aa931498bd315c85e1"
+#  "ToZip"=>""
+#  "FromState"=>"CA"
+#  "Called"=>"+12065351536"
+#  "FromCountry"=>"US"
+#  "CallerCountry"=>"US"
+#  "CalledZip"=>""
+#  "Direction"=>"inbound"
+#  "FromCity"=>"SAN FRANCISCO"
+#  "CalledCountry"=>"US"
+#  "CallerState"=>"CA"
+#  "CallSid"=>"CA74c69e5ae1be18b65cf66dfeb5750c46"
+#  "CalledState"=>"WA"
+#  "From"=>"+14155154361"
+#  "CallerZip"=>"94956"
+#  "FromZip"=>"94956"
+#  "CallStatus"=>"ringing"
+#  "ToCity"=>""
+#  "ToState"=>"WA"
+#  "To"=>"+12065351536"
+#  "ToCountry"=>"US"
+#  "CallerCity"=>"SAN FRANCISCO"
+#  "ApiVersion"=>"2010-04-01"
+#  "Caller"=>"+1#{the phone number}"
+#  "CalledCity"=>""}
+
