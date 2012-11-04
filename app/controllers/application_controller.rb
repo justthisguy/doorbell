@@ -69,11 +69,18 @@ class ApplicationController < ActionController::Base
     # logger.debug('~~~~~~~~~ calling event call ' + params[:From])
     
     
-    params[:From] == '+14155154361' ? say = "<Say>Hello Ken. Thank you for calling</Say>" : say = ""
-    params[:From] == '+12063038222' ? say = "<Say>Hello Skander. Thank you for calling</Say>" : say = ""
-    params[:From] == '+12148685961' ? say = "<Say>Hello Parental Unit. Thank you for calling</Say>" : say = ""
-    params[:From] == '+18163650563' ? say = "<Say>Hello Kris. Thank you for calling</Say>" : say = ""
-
+    if params[:From] == '+14155154361' 
+      then say = "<Say>Hello Ken. Thank you for calling</Say>"
+    elsif params[:From] == '+12063038222' 
+      say = "<Say>Hello Skander. Thank you for calling</Say>"
+    elsif params[:From] == '+12148685961' 
+      say = "<Say>Hello Parental Unit. Thank you for calling</Say>"
+    elsif params[:From] == '+18163650563' 
+      say = "<Say>Hello Kris. Thank you for calling</Say>"
+    else
+      say = ""
+    end
+    
     now = DateTime.now
     mdays = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth', 'twentieth', 'twenty-first', 'twenty-second', 'twenty-third', 'twenty-fourth', 'twenty-fifth', 'twenty-sixth', 'twenty-seventh', 'twenty-eighth', 'twenty-ninth', 'thirtieth', 'thirty-first']
     say = now.strftime('it is now ') + now.strftime('%M').to_i.to_s + now.strftime(' minutes after %l %p on %A, the ' ) + mdays[now.strftime('%e').to_i] + now.strftime(' day of %B in the year %Y' )
