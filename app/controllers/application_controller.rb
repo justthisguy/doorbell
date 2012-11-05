@@ -79,6 +79,8 @@ class ApplicationController < ActionController::Base
       skander
     elsif params[:From] == make_voice_number(ENV['angie_phonenumber']) 
       angie
+    elsif params[:From] == make_voice_number(ENV['carter_phonenumber'])
+      carter
     elsif params[:From] == make_voice_number(ENV['twilio_phonenumber'])  || params[:From] == @@twilios_number
       twilio
     else
@@ -107,6 +109,28 @@ class ApplicationController < ActionController::Base
       @client.account.sms.messages.create(from: '2065351536', to: ENV['ken_text_phonenumber'],  body: 'TWILIO is calling.' )
       respond("<Gather numDigits='1'><Say voice='woman'>Hello Twilio. Thank you for your interest. If you were impressed with my application, Please press 1. If you thought, WOW, Ken is amazing, Please press 2. If you are calling only cause your manager made you, Please press 3.</Say></Gather>")
     end
+  end
+  
+  def carter
+    case params[:Digits]
+    when '1'
+      @client.account.sms.messages.create(from: '2065351536', to: ENV['ken_text_phonenumber'],  body: 'Carter pressed ONE.' )
+      respond("<Gather numDigits='1'><Say voice='woman'>Yeah.  You are right. Rails is pretty great.</Say><Pause/><Say voice='woman'> To talk to Ken, Please press nine.</Say></Gather>")
+    when '2'
+      @client.account.sms.messages.create(from: '2065351536', to: ENV['ken_text_phonenumber'],  body: 'Carter pressed TWO.' )
+      respond("<Gather numDigits='1'><Say voice='woman'>I like San Francisco too.</Say><Pause/><Say voice='woman'> To talk to Ken, Please press nine.</Say></Gather>")
+    when '3'
+      @client.account.sms.messages.create(from: '2065351536', to: ENV['ken_text_phonenumber'],  body: 'Carter pressed THREE' )
+      respond("<Gather numDigits='1'><Say voice='woman'>Joe's Pizzaria.  What can I get you?</Say><Pause/><Say voice='woman'>Just kidding.  I don't have any pizza. To talk to Ken, Please press nine.</Say></Gather>")
+    when '4', '5', '6', '7', '8' 
+      respond("<Gather numDigits='1'><Play>http://41monkeys.com/wise_guya.mp3</Play><Pause/><Say voice='woman'> To talk to Ken, Please press nine.</Say></Gather>")
+    when '9' 
+      logger.debug('~~~~~~~~~ calling event call pound key  ' + "<Dial>#{make_voice_number(ENV['ken_phonenumber'])}</Dial>")
+      respond("<Dial>#{make_voice_number(ENV['ken_phonenumber'])}</Dial>") 
+    else
+      @client.account.sms.messages.create(from: '2065351536', to: ENV['ken_text_phonenumber'],  body: 'Carter is in it.' )
+      respond("<Gather numDigits='1'><Say voice='woman'>Hello Carter. Your mission, should you choose to accept it, </Say><Pause/><Say voice='woman'>Wait. That's not for you.</Say><Pause/><Say voice='woman'>Did I mention how hansome you look? Ok. down to business. If you thinks Rails great. Please press 1. If San Francisco is a nice city. Please press 2. If you would like to order pizza.  Please press 3. </Say></Gather>")
+    end    
   end
   
   def skander
