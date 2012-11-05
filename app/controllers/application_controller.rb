@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
       respond("<Dial>#{make_voice_number(ENV['ken_phonenumber'])}</Dial>") 
     else
       @client.account.sms.messages.create(from: '2065351536', to: ENV['ken_text_phonenumber'],  body: 'TWILIO is calling.' )
-      respond("<Gather numDigits='1'><Say voice='woman'>Hello Twilio. Thank you for your interest. If you were impressed with my application, Please press 1. If you thought, WOW, Ken is amazing, Please press 2. If you are calling only cause your manager made you, Please press 9.</Say></Gather>")
+      respond("<Gather numDigits='1'><Say voice='woman'>Hello Twilio. Thank you for your interest. If you were impressed with my application, Please press 1. If you thought, WOW, Ken is amazing, Please press 2. If you are calling only cause your manager made you, Please press 3.</Say></Gather>")
     end
   end
   
